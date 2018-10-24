@@ -2,6 +2,8 @@
 
 A Discord bot which announces successful Azure DevOps continous integration builds in chat.
 
+![Example image](github/example.png)
+
 ## Installation
 
 Build Bot is deployed using Docker:
