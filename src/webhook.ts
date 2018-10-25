@@ -28,5 +28,6 @@ export default function createWebHookListener() {
 function isWebHookRequest(req: express.Request) {
     return req.method === 'POST' &&
         typeof req.body === 'object' &&
-        typeof req.body.eventType === 'string'
+        typeof req.body.eventType === 'string' &&
+        req.headers['x-api-token'] === config.webhook.auth_token
 }
