@@ -15,6 +15,10 @@ interface IBuildCompleteInfo {
 export default function createBot() {
     const client = new Discord.Client()
 
+    client.on('error', (error) => {
+        console.error('Discord bot unhandled error', error)
+    })
+
     client.on('ready', () => {
         console.log(`[bot] Now signed in.`)
     })
