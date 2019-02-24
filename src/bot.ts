@@ -38,7 +38,7 @@ export default function createBot() {
                 .setTimestamp(new Date())
                 .setFooter('Azure DevOps', 'https://azurecomcdn.azureedge.net/cvt-c8c25e81432b2564b126c4a01fde1d9ee2e5fe1a4390e6a8494c91255fd5b2c3/images/shared/services/devops/pipelines-icon-80.png')
                 .addField('Project', info.project)
-                .addField('Queue', info.queue)
+                // .addField('Queue', info.queue)
                 .addField('Commit', `[${info.commitSha}](${info.commit})`)
 
             channel.send({ embed })
