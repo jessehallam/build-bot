@@ -6,26 +6,28 @@ const bot = createBot()
 const webhook = createWebhook()
 
 webhook.on('build.complete', async build => {
-    console.log('build.complete', build)
+    try {
+        const projectId = build.resourceContainers.project.id
+        const project = await getProject(projectId)
+        const definition = await getBuildDefinition(build.resource.definition.id, projectId)
+        
     
-    const projectId = build.resourceContainers.project.id
-    const project = await getProject(projectId)
-    console.log('project', project)
-    const definition = await getBuildDefinition(build.resource.definition.id, projectId)
-    console.log('definition', definition)
-
-    const commitSha = /:([a-zA-Z0-9]+)$/.exec(build.resource.sourceGetVersion)[1]
-
-    bot.buildComplete({
-        commit: definition.repository.properties.manageUrl + '/commit/' + commitSha,
-        commitSha: commitSha,
-        buildNumber: build.resource.buildNumber,
-        buildUrl: /\(([^)]+)\)/.exec(build.message.markdown)[1],
-        message: build.message.text,
-        project: project.name,
-        queue: ''
-        //queue: build.resource.queue.name
-    })
+        const commitSha = /:([a-zA-Z0-9]+)$/.exec(build.resource.sourceGetVersion)[1]
+    
+        bot.buildComplete({
+            commit: definition.repository.properties.manageUrl + '/commit/' + commitSha,
+            commitSha: commitSha,
+            buildNumber: build.resource.buildNumber,
+            buildUrl: /\(([^)]+)\)/.exec(build.message.markdown)[1],
+            message: build.message.text,
+            project: project.name,
+            queue: ''
+        })
+    }
+    catch (err) {
+        console.error('Error handling build')
+        console.error(err)
+    }
 })
 
 async function getBuildDefinition(id: number, projectId: string) {
