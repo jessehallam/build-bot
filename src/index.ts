@@ -23,7 +23,8 @@ webhook.on('build.complete', async build => {
         buildUrl: /\(([^)]+)\)/.exec(build.message.markdown)[1],
         message: build.message.text,
         project: project.name,
-        queue: build.resource.queue.name
+        queue: ''
+        //queue: build.resource.queue.name
     })
 })
 
