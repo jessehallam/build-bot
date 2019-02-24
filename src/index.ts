@@ -6,9 +6,13 @@ const bot = createBot()
 const webhook = createWebhook()
 
 webhook.on('build.complete', async build => {
+    console.log('build.complete', build)
+    
     const projectId = build.resourceContainers.project.id
     const project = await getProject(projectId)
+    console.log('project', project)
     const definition = await getBuildDefinition(build.resource.definition.id, projectId)
+    consoole.log('definition', definition)
 
     const commitSha = /:([a-zA-Z0-9]+)$/.exec(build.resource.sourceGetVersion)[1]
 
